@@ -1,16 +1,12 @@
-/* Genel Ayarlar */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Temel Ayarlar ve Değişkenler */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
     --red: #e60000;
+    --red-glow: rgba(230, 0, 0, 0.7);
     --dark: #0a0a0a;
-    --darker: #050505;
+    --darker: #030303;
     --light: #ffffff;
-    --gray: #b3b3b3;
+    --gray: #cccccc;
 }
 
 body {
@@ -19,258 +15,155 @@ body {
     color: var(--light);
     overflow-x: hidden;
 }
+.page-bg { background-image: radial-gradient(circle at center, #111 0%, #000 100%); }
+.text-red { color: var(--red); text-shadow: 0 0 10px var(--red-glow); }
 
-.text-red {
-    color: var(--red);
-}
-
-/* Scrollbar Tasarımı */
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--darker); }
-::-webkit-scrollbar-thumb { background: var(--red); }
-
-/* Header / Navbar */
-header {
+/* Loader Ekranı */
+#loader {
     position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(5, 5, 5, 0.9);
-    padding: 20px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    border-bottom: 2px solid var(--red);
-    backdrop-filter: blur(5px);
+    top:0; left:0; width: 100%; height: 100%;
+    background: #000;
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+.glitch {
+    font-family: 'Oswald', sans-serif;
+    font-size: 4rem;
+    font-style: italic;
+    color: white;
+    position: relative;
+    animation: glitch 1.5s infinite;
+}
+@keyframes glitch {
+    0% { text-shadow: 2px 0 var(--red), -2px 0 #fff; }
+    50% { text-shadow: -2px 0 var(--red), 2px 0 #fff; }
+    100% { text-shadow: 2px 0 var(--red), -2px 0 #fff; }
 }
 
+/* Navbar */
+header {
+    position: fixed; top: 0; width: 100%;
+    padding: 20px 50px;
+    display: flex; justify-content: space-between; align-items: center;
+    z-index: 1000;
+    transition: 0.4s;
+    background: transparent;
+}
+header.solid-nav, header.scrolled {
+    background: rgba(0,0,0,0.95);
+    border-bottom: 2px solid var(--red);
+    box-shadow: 0 5px 20px var(--red-glow);
+}
 .logo {
     font-family: 'Oswald', sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 26px; font-weight: 700; font-style: italic;
 }
+.logo .fd { font-size: 34px; color: var(--red); }
+.logo .garage { color: var(--red); }
 
-.logo .fd {
-    color: var(--red);
-    font-size: 30px;
-    font-style: italic;
-}
-
-.logo .garage {
-    color: var(--red);
-    font-style: italic;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-
+nav ul { list-style: none; display: flex; gap: 30px; }
 nav ul li a {
-    color: var(--light);
-    text-decoration: none;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 14px;
+    color: var(--light); text-decoration: none;
+    font-weight: 700; text-transform: uppercase;
+    position: relative; transition: 0.3s;
+}
+nav ul li a:hover, nav ul li a.active { color: var(--red); }
+nav ul li a::after {
+    content: ''; position: absolute; left: 0; bottom: -5px;
+    width: 0%; height: 2px; background: var(--red);
     transition: 0.3s;
 }
+nav ul li a:hover::after, nav ul li a.active::after { width: 100%; box-shadow: 0 0 10px var(--red); }
 
-nav ul li a:hover {
-    color: var(--red);
-    text-shadow: 0 0 10px var(--red);
+/* Hero Video Alanı */
+#hero-video {
+    position: relative; height: 100vh; width: 100%;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
 }
-
-/* Hero Section */
-#hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    /* İstersen buraya dükkanın veya S2000'in fotoğrafının linkini koyabilirsin */
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+#bg-video {
+    position: absolute; top: 50%; left: 50%;
+    min-width: 100%; min-height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 0; object-fit: cover;
 }
-
-.hero-content h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 5rem;
-    font-style: italic;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 10px rgba(230, 0, 0, 0.5);
+.video-overlay {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(230,0,0,0.2) 100%);
+    z-index: 1;
 }
-
-.hero-content p {
-    font-size: 1.5rem;
-    color: var(--gray);
-    margin-bottom: 30px;
-    letter-spacing: 2px;
+.hero-content {
+    position: relative; z-index: 2;
 }
+.sub-title { font-family: 'Oswald', sans-serif; font-size: 1.5rem; letter-spacing: 5px; color: #fff; margin-bottom: 10px; }
+.main-title { font-family: 'Oswald', sans-serif; font-size: 6vw; font-style: italic; line-height: 1.1; margin-bottom: 20px; }
+.hero-desc { font-size: 1.5rem; font-weight: 300; margin-bottom: 40px; }
 
+/* Butonlar */
+.action-buttons { display: flex; gap: 20px; justify-content: center; }
+.btn-primary, .btn-outline {
+    padding: 15px 40px; font-size: 1.2rem; font-weight: bold;
+    text-transform: uppercase; text-decoration: none; border-radius: 4px;
+    transition: 0.3s; font-family: 'Oswald', sans-serif;
+}
 .btn-primary {
-    background-color: var(--red);
-    color: var(--light);
-    padding: 15px 40px;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: 5px;
-    transition: 0.3s;
-    box-shadow: 0 0 15px rgba(230, 0, 0, 0.6);
+    background: var(--red); color: white;
+    box-shadow: 0 0 15px var(--red-glow); border: 2px solid var(--red);
 }
-
-.btn-primary:hover {
-    background-color: #ff1a1a;
-    box-shadow: 0 0 30px rgba(230, 0, 0, 1);
-    transform: scale(1.05);
+.btn-primary:hover { background: transparent; transform: scale(1.05); }
+.btn-outline {
+    background: transparent; color: white; border: 2px solid white;
 }
+.btn-outline:hover { background: white; color: black; transform: scale(1.05); }
 
-/* Services Section */
-#services {
-    padding: 100px 50px;
-    background-color: var(--dark);
-    text-align: center;
+/* Hizmetler Sayfası Grid Yapısı */
+#services-page { padding: 150px 50px 100px; text-align: center; }
+.services-header h1 { font-family: 'Oswald', sans-serif; font-size: 3rem; font-style: italic; }
+.services-header h2 { font-size: 2rem; margin-bottom: 15px; }
+.services-header p { color: var(--gray); margin-bottom: 50px; font-size: 1.2rem; }
+
+.detailed-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px; max-width: 1200px; margin: 0 auto;
 }
-
-.section-header h2 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 3rem;
-    font-style: italic;
-    margin-bottom: 10px;
+.detail-card {
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #333; border-top: 4px solid var(--red);
+    padding: 40px 30px; text-align: left; border-radius: 10px;
+    transition: transform 0.4s, box-shadow 0.4s;
+    backdrop-filter: blur(10px);
 }
-
-.section-header p {
-    color: var(--gray);
-    font-size: 1.2rem;
-    margin-bottom: 50px;
+.detail-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 15px 30px var(--red-glow);
+    border-color: var(--red);
 }
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
+.card-icon {
+    font-size: 3rem; color: var(--red); margin-bottom: 20px;
+    text-shadow: 0 0 15px var(--red-glow);
 }
-
-.service-card {
-    background: #111;
-    padding: 40px 20px;
-    border-radius: 10px;
-    border-bottom: 4px solid var(--red);
-    transition: 0.4s;
-    cursor: pointer;
+.detail-card h3 {
+    font-family: 'Oswald', sans-serif; font-size: 1.8rem;
+    margin-bottom: 20px; letter-spacing: 1px;
 }
+.detail-card ul { list-style: none; }
+.detail-card ul li { margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
 
-.service-card i {
-    font-size: 3rem;
-    color: var(--red);
-    margin-bottom: 20px;
-}
-
-.service-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-}
-
-.service-card p {
-    color: var(--gray);
-    font-size: 0.95rem;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(230, 0, 0, 0.2);
-    background: #1a1a1a;
-}
-
-/* Brands Section */
-#brands {
-    padding: 80px 50px;
-    text-align: center;
-    background: var(--darker);
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-}
-
-#brands h2 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2.5rem;
-    color: var(--red);
-    margin-bottom: 20px;
-}
-
-#brands p {
-    color: var(--gray);
-    margin-bottom: 30px;
-}
-
-.brand-icons {
-    font-size: 1.5rem;
-    color: var(--light);
-    font-weight: 900;
-    font-style: italic;
-    text-shadow: 0 0 5px var(--red);
+/* Scroll Animasyon Sınıfları */
+.scroll-anim { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.scroll-anim.visible { opacity: 1; transform: translateY(0); }
+.fade-in-up { animation: fadeInUp 1.2s ease-out forwards; }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Footer */
-footer {
-    background: #000;
-    padding: 60px 50px 20px;
-    text-align: center;
-}
-
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.footer-logo h2 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2.5rem;
-    font-style: italic;
-}
-
-.footer-logo p {
-    color: var(--gray);
-    margin-top: 5px;
-}
-
-.contact-info {
-    text-align: left;
-}
-
-.contact-info p {
-    margin: 15px 0;
-    font-size: 1.1rem;
-}
-
-.contact-info i {
-    margin-right: 10px;
-    font-size: 1.3rem;
-}
-
-.footer-bottom {
-    color: #555;
-    border-top: 1px solid #222;
-    padding-top: 20px;
-    font-size: 0.9rem;
-}
-
-/* Animations */
-.hidden-animate {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 0.8s ease-out;
-}
-
-.show-animate {
-    opacity: 1;
-    transform: translateY(0);
-}
+footer { background: #050505; border-top: 2px solid #222; padding: 60px 50px; }
+.footer-content { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px; }
+.footer-box h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; font-style: italic; }
+.footer-box p { color: var(--gray); margin-top: 10px; line-height: 1.8; }
+.neon-text { font-size: 1.5rem; font-weight: bold; color: var(--light); text-shadow: 0 0 10px var(--red-glow); }
+.brands-mini { margin-top: 20px; font-weight: bold; color: #fff; background: var(--red); padding: 5px 15px; display: inline-block; border-radius: 3px; }
