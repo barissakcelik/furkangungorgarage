@@ -1,4 +1,4 @@
-// Sayfa yüklendiğinde Loader'ı kaldır (Animasyonu izlemek için süre 2 saniye)
+// Sayfa yüklendiğinde Loader'ı kaldır
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     if (loader) {
@@ -61,25 +61,19 @@ if (tiltCards.length > 0) {
 const form = document.getElementById('whatsapp-form');
 if (form) {
     form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Sayfanın yenilenmesini engeller
+        e.preventDefault(); 
 
-        // Formdaki verileri çek
         const isim = document.getElementById('isim').value;
         const telefon = document.getElementById('telefon').value;
         const arac = document.getElementById('arac').value;
         const hizmet = document.getElementById('hizmet').value;
         const notlar = document.getElementById('notlar').value;
 
-        // WhatsApp mesaj formatı
         const mesaj = `*YENİ RANDEVU TALEBİ* 🚗🔧\n\n👤 *Ad Soyad:* ${isim}\n📞 *Telefon:* ${telefon}\n🚘 *Araç:* ${arac}\n⚙️ *Hizmet:* ${hizmet}\n📝 *Notlar:* ${notlar ? notlar : 'Belirtilmedi'}`;
 
-        // URL formatına çevir (Boşlukları ve satır atlamalarını kodlar)
         const encodedMesaj = encodeURIComponent(mesaj);
-        
-        // WhatsApp API linki (Direkt numaranıza gider)
         const whatsappURL = `https://wa.me/905407715561?text=${encodedMesaj}`;
 
-        // Yeni sekmede WhatsApp'ı aç
         window.open(whatsappURL, '_blank');
     });
 }
