@@ -1,12 +1,14 @@
-// Sayfa yüklendiğinde Loader'ı kaldır
+// Sayfa yüklendiğinde Loader'ı kaldır (Animasyonu izlemek için süre 2 saniye)
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
-    setTimeout(() => {
-        loader.style.opacity = '0';
+    if (loader) {
         setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500);
-    }, 1000); // 1 saniye havalı FD GARAGE yazısını gösterir
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 800); // 0.8 saniyede yavaşça karararak kaybolur
+        }, 2000); // Dönen lastiği ve FD GARAGE yazısını 2 saniye gösterir
+    }
 });
 
 // Scroll Animasyonları (Elementler görünce belirsin)
@@ -20,11 +22,10 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.scroll-anim').forEach((el) => observer.observe(el));
 
-// Navbar Scroll Efekti (Ana sayfada video üzerinde transparan, aşağı inince siyah)
+// Navbar Scroll Efekti
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
-    // Eğer sayfada solid-nav classı yoksa (Yani Ana sayfadaysak)
-    if (!navbar.classList.contains('solid-nav')) {
+    if (navbar && !navbar.classList.contains('solid-nav')) {
         if (window.scrollY > 100) {
             navbar.classList.add('scrolled');
         } else {
@@ -33,23 +34,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Kartlar için 3D Tilt (Eğilme) Efekti - Mouse ile üzerine gelince kart farenin yönüne doğru hafif eğilir
+// Kartlar için 3D Tilt (Eğilme) Efekti - Sadece ilgili sayfalarda çalışır
 const tiltCards = document.querySelectorAll('.tilt-card');
-tiltCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left; 
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = ((y - centerY) / centerY) * -10; // Max 10 derece eğim
-        const rotateY = ((x - centerX) / centerX) * 10;
+if (tiltCards.length > 0) {
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; 
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10; 
+            const rotateY = ((x - centerX) / centerX) * 10;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-    });
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
 
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        });
     });
-});
+}

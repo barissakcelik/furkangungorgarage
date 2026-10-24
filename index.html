@@ -10,8 +10,15 @@
 </head>
 <body>
 
-    <!-- Yükleme Ekranı Animasyonu -->
+    <!-- Yükleme Ekranı Animasyonu (Dönen Lastik) -->
     <div id="loader">
+        <div class="tire-container">
+            <div class="tire">
+                <div class="rim">
+                    <div class="rim-center"></div>
+                </div>
+            </div>
+        </div>
         <h1 class="glitch" data-text="FD GARAGE">FD GARAGE</h1>
     </div>
 
@@ -23,7 +30,7 @@
             <ul>
                 <li><a href="index.html" class="active">Ana Sayfa</a></li>
                 <li><a href="hizmetler.html">Hizmetlerimiz</a></li>
-                <li><a href="#iletisim">İletişim</a></li>
+                <li><a href="randevu.html">Randevu Al</a></li>
             </ul>
         </nav>
     </header>
@@ -31,8 +38,8 @@
     <!-- Tam Ekran Video Hero Alanı -->
     <section id="hero-video">
         <video autoplay muted loop playsinline id="bg-video">
-            <!-- Temsili bir araba/motor videosu linki (Buraya kendi dükkan videonu koyabilirsin) -->
-            <source src="https://cdn.pixabay.com/video/2021/08/04/83870-584711677_large.mp4" type="video/mp4">
+            <!-- Senin klasörüne eklediğin video -->
+            <source src="araba-video.mp4" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
         
@@ -42,12 +49,12 @@
             <p class="hero-desc">Performans, Bakım, Onarım... Aynı Tutku, Daima Daha İyisi.</p>
             <div class="action-buttons">
                 <a href="hizmetler.html" class="btn-primary">Hizmetleri İncele</a>
-                <a href="#iletisim" class="btn-outline">Randevu Al</a>
+                <a href="randevu.html" class="btn-outline">Randevu Al</a>
             </div>
         </div>
     </section>
 
-    <!-- İletişim Footer (Sayfa Altı) -->
+    <!-- Footer -->
     <footer id="iletisim" class="scroll-anim">
         <div class="footer-content">
             <div class="footer-box">
