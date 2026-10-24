@@ -27,7 +27,7 @@
         <div class="appointment-container scroll-anim">
             <div class="appointment-info">
                 <h1 class="text-red">ARACINIZ EMİN ELLERDE!</h1>
-                <p>Garajımıza gelmeden önce yerinizi ayırtın. JDM uzmanlığı ve profesyonel hizmet için formu doldurun, sizi arayalım.</p>
+                <p>Garajımıza gelmeden önce yerinizi ayırtın. JDM uzmanlığı ve profesyonel hizmet için formu doldurun, direkt WhatsApp'tan onaylayalım.</p>
                 
                 <div class="info-list">
                     <p><i class="fa-solid fa-phone text-red"></i> 0540 771 55 61</p>
@@ -36,36 +36,37 @@
             </div>
 
             <div class="appointment-form">
-                <form action="#" method="POST">
+                <!-- ID eklendi, JS bu formdan verileri alıp WhatsApp'a gönderecek -->
+                <form id="whatsapp-form">
                     <div class="form-group">
                         <label>Adınız Soyadınız</label>
-                        <input type="text" placeholder="Ad Soyad" required>
+                        <input type="text" id="isim" placeholder="Ad Soyad" required>
                     </div>
                     <div class="form-group">
                         <label>Telefon Numaranız</label>
-                        <input type="tel" placeholder="05XX XXX XX XX" required>
+                        <input type="tel" id="telefon" placeholder="05XX XXX XX XX" required>
                     </div>
                     <div class="form-group">
                         <label>Araç Marka / Model</label>
-                        <input type="text" placeholder="Örn: Honda S2000" required>
+                        <input type="text" id="arac" placeholder="Örn: Honda S2000" required>
                     </div>
                     <div class="form-group">
                         <label>Hizmet Türü</label>
-                        <select required>
+                        <select id="hizmet" required>
                             <option value="" disabled selected>Lütfen Seçiniz</option>
-                            <option value="periyodik">Periyodik Bakım</option>
-                            <option value="motor">Motor Bakımı</option>
-                            <option value="fren">Fren Sistemleri</option>
-                            <option value="ariza">Arıza Tespiti</option>
-                            <option value="performans">Performans Geliştirme</option>
-                            <option value="diger">Diğer / Genel Kontrol</option>
+                            <option value="Periyodik Bakım">Periyodik Bakım</option>
+                            <option value="Motor Bakımı">Motor Bakımı</option>
+                            <option value="Fren Sistemleri">Fren Sistemleri</option>
+                            <option value="Arıza Tespiti">Arıza Tespiti</option>
+                            <option value="Performans Geliştirme">Performans Geliştirme</option>
+                            <option value="Diğer / Genel Kontrol">Diğer / Genel Kontrol</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Eklemek İstedikleriniz (Opsiyonel)</label>
-                        <textarea rows="4" placeholder="Şikayetiniz veya belirtmek istedikleriniz..."></textarea>
+                        <textarea id="notlar" rows="4" placeholder="Şikayetiniz veya belirtmek istedikleriniz..."></textarea>
                     </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">Randevu Talebi Gönder</button>
+                    <button type="submit" class="btn-primary" style="width: 100%;">WhatsApp Üzerinden Gönder</button>
                 </form>
             </div>
         </div>

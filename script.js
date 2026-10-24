@@ -6,12 +6,12 @@ window.addEventListener('load', () => {
             loader.style.opacity = '0';
             setTimeout(() => {
                 loader.style.display = 'none';
-            }, 800); // 0.8 saniyede yavaşça karararak kaybolur
-        }, 2000); // Dönen lastiği ve FD GARAGE yazısını 2 saniye gösterir
+            }, 800);
+        }, 2000); 
     }
 });
 
-// Scroll Animasyonları (Elementler görünce belirsin)
+// Scroll Animasyonları
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -34,7 +34,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Kartlar için 3D Tilt (Eğilme) Efekti - Sadece ilgili sayfalarda çalışır
+// Kartlar için 3D Tilt (Eğilme) Efekti
 const tiltCards = document.querySelectorAll('.tilt-card');
 if (tiltCards.length > 0) {
     tiltCards.forEach(card => {
@@ -54,5 +54,32 @@ if (tiltCards.length > 0) {
         card.addEventListener('mouseleave', () => {
             card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
+    });
+}
+
+// WhatsApp Randevu Formu Gönderme Sistemi
+const form = document.getElementById('whatsapp-form');
+if (form) {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Sayfanın yenilenmesini engeller
+
+        // Formdaki verileri çek
+        const isim = document.getElementById('isim').value;
+        const telefon = document.getElementById('telefon').value;
+        const arac = document.getElementById('arac').value;
+        const hizmet = document.getElementById('hizmet').value;
+        const notlar = document.getElementById('notlar').value;
+
+        // WhatsApp mesaj formatı
+        const mesaj = `*YENİ RANDEVU TALEBİ* 🚗🔧\n\n👤 *Ad Soyad:* ${isim}\n📞 *Telefon:* ${telefon}\n🚘 *Araç:* ${arac}\n⚙️ *Hizmet:* ${hizmet}\n📝 *Notlar:* ${notlar ? notlar : 'Belirtilmedi'}`;
+
+        // URL formatına çevir (Boşlukları ve satır atlamalarını kodlar)
+        const encodedMesaj = encodeURIComponent(mesaj);
+        
+        // WhatsApp API linki (Direkt numaranıza gider)
+        const whatsappURL = `https://wa.me/905407715561?text=${encodedMesaj}`;
+
+        // Yeni sekmede WhatsApp'ı aç
+        window.open(whatsappURL, '_blank');
     });
 }
