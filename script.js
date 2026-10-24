@@ -1,4 +1,4 @@
-// Sayfa yüklendiğinde Loader'ı kaldır
+// Sayfa yüklendiğinde Loader'ı kaldır (Süre 2 saniye)
 window.addEventListener('load', () => {
     const loader = document.getElementById('loader');
     if (loader) {

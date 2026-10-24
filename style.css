@@ -32,15 +32,16 @@ body {
 .glitch { font-family: 'Oswald', sans-serif; font-size: 3rem; font-style: italic; color: white; position: relative; animation: glitch 1.5s infinite; z-index: 3; }
 @keyframes glitch { 0% { text-shadow: 2px 0 var(--red), -2px 0 #fff; } 50% { text-shadow: -2px 0 var(--red), 2px 0 #fff; } 100% { text-shadow: 2px 0 var(--red), -2px 0 #fff; } }
 
-/* Navbar */
+/* Navbar Sol Üst Logo ve Link Ayarları */
 header {
-    position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;
+    position: fixed; top: 0; width: 100%; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center;
     z-index: 1000; transition: 0.4s; background: transparent;
 }
 header.solid-nav, header.scrolled { background: rgba(0,0,0,0.95); border-bottom: 2px solid var(--red); box-shadow: 0 5px 20px var(--red-glow); }
-.logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; font-style: italic; }
-.logo .fd { font-size: 34px; color: var(--red); }
-.logo .garage { color: var(--red); }
+.logo-link { display: flex; align-items: center; transition: transform 0.3s ease; }
+.logo-link:hover { transform: scale(1.05); }
+.nav-logo { height: 75px; width: auto; object-fit: contain; } /* Sol üst logo boyutu */
+
 nav ul { list-style: none; display: flex; gap: 30px; }
 nav ul li a { color: var(--light); text-decoration: none; font-weight: 700; text-transform: uppercase; position: relative; transition: 0.3s; }
 nav ul li a:hover, nav ul li a.active { color: var(--red); }
@@ -66,20 +67,46 @@ nav ul li a:hover::after, nav ul li a.active::after { width: 100%; box-shadow: 0
 .btn-outline { background: transparent; color: white; border: 2px solid white; }
 .btn-outline:hover { background: white; color: black; transform: scale(1.05); }
 
-/* Hizmetler Sayfası */
-#services-page { padding: 150px 50px 100px; text-align: center; }
-.services-header h1 { font-family: 'Oswald', sans-serif; font-size: 3rem; font-style: italic; }
-.services-header h2 { font-size: 2rem; margin-bottom: 15px; }
-.services-header p { color: var(--gray); margin-bottom: 50px; font-size: 1.2rem; }
-.detailed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
-.detail-card {
-    background: rgba(20, 20, 20, 0.8); border: 1px solid #333; border-top: 4px solid var(--red); padding: 40px 30px; text-align: left; border-radius: 10px; transition: transform 0.4s, box-shadow 0.4s; backdrop-filter: blur(10px);
+/* Hizmetler Sayfası Dekorasyonu ve Fotoğraflı Kartlar */
+#services-page { padding: 150px 50px 100px; text-align: center; position: relative; }
+.services-header h1.glow-text { font-family: 'Oswald', sans-serif; font-size: 3.5rem; font-style: italic; letter-spacing: 1px; }
+.sub-header { font-family: 'Oswald', sans-serif; font-size: 2.2rem; font-style: italic; margin-top: 5px; color: white; }
+.decorator-line { width: 100px; height: 4px; background: var(--red); margin: 20px auto; box-shadow: 0 0 10px var(--red); }
+.services-header p { color: var(--gray); margin-bottom: 60px; font-size: 1.2rem; font-weight: 300; }
+
+.detailed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; max-width: 1200px; margin: 0 auto; }
+
+/* Yenilenen Fotoğraflı Kart Tasarımı */
+.detail-card.photo-bg {
+    position: relative; overflow: hidden; height: 350px; background-size: cover; background-position: center; border: 1px solid #222; border-top: 5px solid var(--red);
+    border-radius: 12px; transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.5s; backdrop-filter: blur(5px);
+    display: flex; flex-direction: column; justify-content: flex-end; /* İçerik alttan başlar */
+    background-image: var(--bg-image);
 }
-.detail-card:hover { transform: translateY(-15px) scale(1.02); box-shadow: 0 15px 30px var(--red-glow); border-color: var(--red); }
-.card-icon { font-size: 3rem; color: var(--red); margin-bottom: 20px; text-shadow: 0 0 15px var(--red-glow); }
-.detail-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 1px; }
-.detail-card ul { list-style: none; }
-.detail-card ul li { margin-bottom: 12px; font-size: 1rem; display: flex; align-items: center; gap: 10px; }
+.card-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, rgba(0,0,0,0.6) 100%);
+    transition: background 0.4s ease; z-index: 1;
+}
+.card-content { position: relative; z-index: 2; padding: 30px; width: 100%; transition: transform 0.4s ease; }
+
+.detail-card:hover {
+    transform: translateY(-15px) scale(1.03); box-shadow: 0 20px 40px rgba(230, 0, 0, 0.4); border-color: var(--red);
+}
+.detail-card:hover .card-overlay {
+    background: linear-gradient(to top, rgba(10, 0, 0, 0.98) 60%, rgba(200, 0, 0, 0.2) 100%); /* Hoverda kırmızı ışık efekti */
+}
+.card-icon { font-size: 2.8rem; color: var(--red); margin-bottom: 15px; text-shadow: 0 0 15px var(--red-glow); transition: transform 0.4s; }
+.detail-card:hover .card-icon { transform: scale(1.15) rotate(-5deg); }
+
+.detail-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; margin-bottom: 15px; letter-spacing: 1px; color: #fff; font-style: italic; }
+.detail-card ul { list-style: none; opacity: 0.85; }
+.detail-card ul li { margin-bottom: 10px; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; font-weight: 500; }
+
+.services-footer { margin-top: 80px; text-align: center; }
+.foot-badge { font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: var(--red); font-style: italic; margin-bottom: 20px; }
+.scale-btn { animation: pulse 2s infinite; }
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
 /* Randevu Sayfası Formu */
 #appointment-page { padding: 150px 50px 100px; display: flex; justify-content: center; }
@@ -105,10 +132,11 @@ nav ul li a:hover::after, nav ul li a.active::after { width: 100%; box-shadow: 0
 .fade-in-up { animation: fadeInUp 1.2s ease-out forwards; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Footer */
+/* Footer Görsel Logo Entegrasyonu */
 footer { background: #050505; border-top: 2px solid #222; padding: 60px 50px; }
 .footer-content { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 40px; }
+.footer-logo-img { height: 110px; width: auto; object-fit: contain; margin-bottom: 10px; } /* Alt logo boyutu */
 .footer-box h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; font-style: italic; }
-.footer-box p { color: var(--gray); margin-top: 10px; line-height: 1.8; }
+.footer-box p { color: var(--gray); margin-top: 5px; line-height: 1.8; }
 .neon-text { font-size: 1.5rem; font-weight: bold; color: var(--light); text-shadow: 0 0 10px var(--red-glow); }
 .brands-mini { margin-top: 20px; font-weight: bold; color: #fff; background: var(--red); padding: 5px 15px; display: inline-block; border-radius: 3px; }
